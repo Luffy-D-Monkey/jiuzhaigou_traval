@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九寨沟环线自驾方案 A3 · 2026.9.14–9.19</title>
+<style>
+  :root{
+    --paper:#f6f1e7; --ink:#2b2a26; --muted:#7a7569;
+    --card:#fffdf8; --line:#e7dfd0;
+    --terra:#c2542f; --terra-d:#9c3f20; --terra-bg:#fbeae2;
+    --teal:#1d7a6e; --teal-bg:#e6f2ef;
+    --gold:#b98a2e; --gold-bg:#f8efdc;
+    --blue:#3d6ea5; --blue-bg:#e8f0f8;
+    --shadow:0 2px 10px rgba(43,42,38,.07);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    background:var(--paper); color:var(--ink); line-height:1.75;
+    background-image:radial-gradient(circle at 12% 8%, rgba(194,84,47,.06) 0, transparent 30%),radial-gradient(circle at 88% 30%, rgba(29,122,110,.05) 0, transparent 32%);
+  }
+  a{color:var(--teal);}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 18px 80px;}
+
+  /* 顶栏 */
+  .topbar{
+    position:sticky; top:0; z-index:50; background:rgba(246,241,231,.92);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  }
+  .topbar-in{max-width:1080px; margin:0 auto; padding:8px 18px; display:flex; gap:6px; align-items:center; overflow-x:auto; white-space:nowrap; scrollbar-width:none;}
+  .topbar-in::-webkit-scrollbar{display:none;}
+  .topbar-in a{
+    text-decoration:none; color:var(--ink); font-size:13px; padding:5px 10px; border-radius:999px;
+    border:1px solid transparent; background:transparent;
+  }
+  .topbar-in a:hover{background:var(--terra-bg); border-color:#f0c9b8; color:var(--terra-d);}
+  .topbar-in .brand{font-weight:800; color:var(--terra); padding-left:0;}
+
+  /* 页头 */
+  header.hero{margin:34px 0 22px;}
+  .eyebrow{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; letter-spacing:.12em; color:var(--terra); font-weight:700; text-transform:uppercase;}
+  .eyebrow::before{content:""; width:26px; height:2px; background:var(--terra); display:inline-block; border-radius:2px;}
+  h1{font-size:clamp(26px,4.6vw,40px); line-height:1.28; margin:8px 0 6px; letter-spacing:.01em;}
+  .subtitle{color:var(--muted); font-size:15px;}
+  .stats{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .stat{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:9px 14px;
+    font-size:13.5px; box-shadow:var(--shadow);
+  }
+  .stat b{font-size:16px; margin-right:3px; color:var(--terra-d);}
+  .stat .u{color:var(--muted); font-size:12px;}
+
+  /* 通用卡片 */
+  section.card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:22px 24px; margin:26px 0; box-shadow:var(--shadow);
+  }
+  h2{
+    font-size:21px; margin-bottom:4px; display:flex; align-items:center; gap:9px; line-height:1.4;
+  }
+  h2 .no{
+    flex:none; width:30px; height:30px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center;
+    background:var(--terra-bg); color:var(--terra-d); font-size:15px; font-weight:800;
+  }
+  .hint{color:var(--muted); font-size:13.5px; margin-bottom:14px;}
+  h3{font-size:16px; margin:20px 0 10px; color:var(--ink);}
+  h3 .tag{font-size:12px; font-weight:700; padding:2px 9px; border-radius:999px; margin-left:6px; vertical-align:2px;}
+
+  /* 置顶必办清单 */
+  #checklist{
+    border:2px solid #efb79f; background:linear-gradient(180deg,#fff7f0,#fffdf8);
+  }
+  #checklist h2 .no{background:var(--terra); color:#fff;}
+  .mustdo{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-top:14px;}
+  .mustdo details{
+    border:1px solid var(--line); border-radius:14px; background:#fff; overflow:hidden;
+  }
+  .mustdo summary{
+    cursor:pointer; font-weight:700; font-size:14.5px; padding:11px 14px; list-style:none;
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+  }
+  .mustdo summary::-webkit-details-marker{display:none;}
+  .mustdo summary::after{content:"▾"; color:var(--terra); transition:transform .2s;}
+  .mustdo details:not([open]) summary::after{transform:rotate(-90deg);}
+  .mustdo .body{padding:2px 14px 14px; font-size:13.5px; color:var(--ink);}
+  .mustdo .body p{margin:6px 0;}
+  .mustdo .body li{margin:4px 0 4px 18px;}
+  .mustdo .emoji{font-size:17px;}
+  .warn-inline{background:var(--gold-bg); border:1px solid #ecd9ae; border-radius:10px; padding:9px 12px; font-size:13px; margin-top:8px;}
+  .danger-inline{background:var(--terra-bg); border:1px solid #f0c9b8; border-radius:10px; padding:9px 12px; font-size:13px; margin-top:8px;}
+
+  /* 打勾清单 */
+  .chkbox{
+    margin:14px 0 4px; padding:14px 16px; border:1px dashed #e7cfb6; border-radius:14px; background:#fffaf4;
+  }
+  .chkbox .chkhead{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+  .chkbox .chkhead b{font-size:14px;}
+  .chkbox .prog{flex:1; min-width:140px; height:8px; background:#efe4d2; border-radius:999px; overflow:hidden;}
+  .chkbox .prog i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--terra),#e08a5c); transition:width .25s;}
+  .chkbox .cnt{font-size:12.5px; color:var(--muted); white-space:nowrap;}
+  .chkgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:4px 14px;}
+  .chk-item{display:flex; align-items:flex-start; gap:8px; font-size:13.3px; padding:4px 0; cursor:pointer;}
+  .chk-item input{width:16px; height:16px; margin-top:3px; accent-color:var(--terra); flex:none; cursor:pointer;}
+  .chk-item span{line-height:1.5;}
+  .chk-item.done span{color:var(--muted); text-decoration:line-through;}
+  .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 14px;}
+  button.act{
+    cursor:pointer; border:1px solid var(--terra); color:var(--terra-d); background:#fff;
+    padding:7px 15px; border-radius:999px; font-size:13px; font-weight:700;
+  }
+  button.act:hover{background:var(--terra-bg);}
+  a.act{
+    text-decoration:none; border:1px solid var(--teal); color:var(--teal); background:#fff;
+    padding:7px 15px; border-radius:999px; font-size:13px; font-weight:700; display:inline-block;
+  }
+  a.act:hover{background:var(--teal-bg);}
+
+  /* 表格 */
+  table{width:100%; border-collapse:collapse; font-size:13.8px; margin:10px 0 6px; background:#fff;}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#faf5ec; font-weight:700; white-space:nowrap;}
+  tr:nth-child(even) td{background:#fdfaf4;}
+  .t-time{white-space:nowrap; font-weight:700; color:var(--terra-d); font-variant-numeric:tabular-nums;}
+  .t-type{white-space:nowrap; font-size:12.5px;}
+  .table-scroll{overflow-x:auto;}
+
+  /* 日卡 */
+  details.day{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    margin:24px 0; box-shadow:var(--shadow); overflow:hidden;
+  }
+  details.day summary{
+    cursor:pointer; list-style:none; display:flex; align-items:center; gap:14px;
+    padding:16px 20px; background:linear-gradient(90deg,#fff9f2,#fffdf8);
+  }
+  details.day summary::-webkit-details-marker{display:none;}
+  .day-no{
+    flex:none; width:52px; height:52px; border-radius:14px; color:#fff; font-weight:800;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.15;
+    background:linear-gradient(135deg,var(--terra),var(--terra-d)); box-shadow:0 3px 8px rgba(194,84,47,.35);
+  }
+  .day-no small{font-size:10px; font-weight:600; opacity:.92;}
+  .day-title{flex:1; min-width:0;}
+  .day-title .dt{font-size:16.5px; font-weight:800; line-height:1.4;}
+  .day-title .dm{font-size:12.8px; color:var(--muted); margin-top:2px;}
+  summary .chev{flex:none; color:var(--terra); font-size:18px; transition:transform .2s;}
+  details.day:not([open]) summary .chev{transform:rotate(-90deg);}
+  details.day[open] summary{border-bottom:1px dashed var(--line);}
+  .day-body{padding:20px 22px 24px;}
+
+  .daychips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px;}
+  .chip{font-size:12.5px; padding:4px 11px; border-radius:999px; border:1px solid var(--line); background:#faf6ee; color:var(--ink);}
+  .chip.c-t{background:var(--terra-bg); border-color:#f0c9b8; color:var(--terra-d); font-weight:700;}
+  .chip.c-e{background:var(--teal-bg); border-color:#b9ddd5; color:var(--teal); font-weight:700;}
+  .chip.c-g{background:var(--gold-bg); border-color:#ecd9ae; color:#8a6514; font-weight:700;}
+  .chip.c-b{background:var(--blue-bg); border-color:#c3d8ef; color:var(--blue); font-weight:700;}
+
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:860px){.twocol{grid-template-columns:1fr;}}
+
+  /* 地图 */
+  .mapframe{
+    border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#f2eee5;
+  }
+  .mapframe iframe{width:100%; height:420px; border:0; display:block;}
+  .mapframe img{width:100%; display:block;}
+  .mapcap{font-size:12.3px; color:var(--muted); margin:8px 2px 0; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .mapcap a{font-size:12.3px;}
+
+  /* 图集 */
+  .gallery{display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:12px;}
+  figure{
+    margin:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff;
+    transition:transform .15s, box-shadow .15s;
+  }
+  figure:hover{transform:translateY(-3px); box-shadow:0 8px 18px rgba(43,42,38,.12);}
+  figure img{width:100%; height:180px; object-fit:cover; display:block; cursor:zoom-in;}
+  figcaption{padding:7px 10px 9px; font-size:12.3px; color:var(--muted); line-height:1.45;}
+  .video-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px;}
+  .vcard{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#000;}
+  .vcard video{width:100%; height:240px; object-fit:cover; display:block; background:#000;}
+  .vcap{font-size:12.3px; color:var(--muted); padding:7px 10px 9px; background:#fff;}
+
+  /* 灯箱 */
+  .lightbox{
+    position:fixed; inset:0; z-index:200; background:rgba(20,18,15,.9); display:none;
+    align-items:center; justify-content:center; padding:20px; cursor:zoom-out;
+  }
+  .lightbox.show{display:flex;}
+  .lightbox img{max-width:96vw; max-height:92vh; border-radius:8px; box-shadow:0 12px 40px rgba(0,0,0,.5); background:#fff;}
+  .lightbox .lbcap{position:absolute; bottom:18px; left:0; right:0; text-align:center; color:#fff; font-size:13px; text-shadow:0 1px 3px rgba(0,0,0,.6);}
+  .lightbox .lbclose{position:absolute; top:14px; right:18px; color:#fff; font-size:32px; line-height:1; cursor:pointer; opacity:.85;}
+  .lightbox .lbclose:hover{opacity:1;}
+
+  /* 住宿 */
+  .hotels{display:grid; grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); gap:10px;}
+  .hotel{
+    border:1px solid var(--line); border-radius:13px; padding:11px 13px; background:#fff; font-size:13px;
+    display:flex; flex-direction:column; gap:3px;
+  }
+  .hotel b{font-size:13.6px;}
+  .hotel .meta{color:var(--muted); font-size:12.2px; display:flex; gap:10px; flex-wrap:wrap;}
+  .hotel .rating{color:#b5771b; font-weight:700;}
+
+  /* 提示框 */
+  .note{
+    border-radius:13px; padding:12px 15px; font-size:13.6px; margin:12px 0;
+    border-left:4px solid var(--gold); background:var(--gold-bg);
+  }
+  .note.red{border-left-color:var(--terra); background:var(--terra-bg);}
+  .note.teal{border-left-color:var(--teal); background:var(--teal-bg);}
+  .note.blue{border-left-color:var(--blue); background:var(--blue-bg);}
+  .note b{font-weight:700;}
+
+  .altbadge{display:inline-block; font-size:12.5px; font-weight:700; padding:2px 10px; border-radius:999px; margin-left:8px; vertical-align:2px;}
+  .alt-high{background:var(--terra-bg); color:var(--terra-d);}
+  .alt-mid{background:var(--gold-bg); color:#8a6514;}
+  .alt-low{background:var(--teal-bg); color:var(--teal);}
+
+  footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; line-height:1.9;}
+  .totop{position:fixed; right:16px; bottom:16px; z-index:60; background:var(--terra); color:#fff; border-radius:999px;
+    width:42px; height:42px; display:flex; align-items:center; justify-content:center; text-decoration:none;
+    box-shadow:0 4px 12px rgba(194,84,47,.4); font-size:18px;}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-in">
+    <span class="brand">方案 A3</span>
+    <a href="#checklist">⛑ 必办清单</a>
+    <a href="#overview">🗺 环线总览</a>
+    <a href="#day1">Day1</a>
+    <a href="#day2">Day2</a>
+    <a href="#day3">Day3</a>
+    <a href="#day4">Day4</a>
+    <a href="#day5">Day5</a>
+    <a href="#budget">💰 费用</a>
+    <a href="#altitude">⛰ 海拔·氧气</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">川西 · 大九寨环线自驾</div>
+  <h1>九寨沟环线方案 A3</h1>
+  <p class="subtitle">深圳往返 · 成都租车 · 5天4晚环线 · 2026年9月14日 – 9月19日（含1天缓冲）</p>
+  <div class="stats">
+    <span class="stat">👥 <b>4</b><span class="u">人（2男2女 · 2人轮换开车）</span></span>
+    <span class="stat">🚗 <b>约1,321</b><span class="u">km 总里程</span></span>
+    <span class="stat">🛣️ <b>319</b><span class="u">元过路费</span></span>
+    <span class="stat">⛽ <b>约905</b><span class="u">元油费</span></span>
+    <span class="stat">🎫 <b>687</b><span class="u">元/人门票（标准票）</span></span>
+    <span class="stat">💰 <b>约4,300–5,500</b><span class="u">元/人（含机票）</span></span>
+  </div>
+</header>
+
+<!-- ══════════ 置顶必办清单 ══════════ -->
+<section class="card" id="checklist">
+  <h2><span class="no">!</span>置顶 · 出发前必办清单</h2>
+  <p class="hint">预约购票 / 租车取还 / 航班 / 天气衣物 / 证件高反 —— 所有景区均需<strong>实名线上购票、刷身份证入园</strong>。下方打勾清单会自动保存在本机浏览器。</p>
+
+  <div class="chkbox">
+    <div class="chkhead">
+      <b>✅ 出发前检查（点一下即可打勾）</b>
+      <div class="prog"><i id="progbar"></i></div>
+      <span class="cnt" id="chkcnt">0 / 10</span>
+      <button class="act" type="button" id="chkreset">清空重来</button>
+    </div>
+    <div class="chkgrid">
+      <label class="chk-item"><input type="checkbox" value="机票"><span>订往返机票（9.14 早班去 · 9.18 晚班回）</span></label>
+      <label class="chk-item"><input type="checkbox" value="酒店"><span>订 4 晚酒店（九寨沟口 / 松潘 / 四姑娘山 / 都江堰）</span></label>
+      <label class="chk-item"><input type="checkbox" value="租车"><span>线上租 SUV（双流机场取还 · 加不计免赔险）</span></label>
+      <label class="chk-item"><input type="checkbox" value="九寨沟门票"><span>抢九寨沟门票（普通 280 / VIP 490）</span></label>
+      <label class="chk-item"><input type="checkbox" value="三星堆"><span>预约三星堆（提前 5 天 20:00 放票）</span></label>
+      <label class="chk-item"><input type="checkbox" value="熊猫谷"><span>预约熊猫谷（提前 7 天）</span></label>
+      <label class="chk-item"><input type="checkbox" value="双桥沟毕棚沟"><span>购双桥沟 + 毕棚沟门票</span></label>
+      <label class="chk-item"><input type="checkbox" value="天气路况"><span>查天气与路况（出发前 3 天 · 巴朗山/理小路）</span></label>
+      <label class="chk-item"><input type="checkbox" value="氧气"><span>备便携氧气瓶（每人 2 罐 · 共约 10 罐）</span></label>
+      <label class="chk-item"><input type="checkbox" value="证件"><span>备证件（身份证 + 驾驶证）与药品</span></label>
+    </div>
+  </div>
+
+  <div class="mustdo">
+    <details open>
+      <summary><span><span class="emoji">📅</span> 提前办理时间轴</span></summary>
+      <div class="body">
+        <p><b>现在 → 出发前1个月</b>：订机票（早班去/晚班回）、订4晚酒店、线上租车锁定价格。</p>
+        <p><b>出发前 1–2 周</b>：抢九寨沟门票（旺季限流，最重要），渠道「阿坝旅游网」小程序/九寨沟官方平台。</p>
+        <p><b>出发前 7 天</b>：熊猫谷预约（公众号「熊猫谷」，提前7天开放）。</p>
+        <p><b>出发前 5 天</b>：三星堆预约（每日 20:00 放第5天票，手慢无）。</p>
+        <p><b>出发前 1–3 天</b>：双桥沟、毕棚沟购票；查九寨沟/四姑娘山/理县天气；确认巴朗山、理小路路况。</p>
+        <div class="danger-inline">⚠️ 出发前 3 天请再次确认各景区余票、天气与路况；九寨沟不设现场售票窗口，没票不能入园。</div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span><span class="emoji">🎫</span> 景点预约购票（2026年旺季价）</span></summary>
+      <div class="body">
+        <p><b>九寨沟</b>：普通票 280元（门票190+观光车90）；<b>VIP套票 490元</b>（另加VIP升级210元，每日限量）。渠道「阿坝旅游网」小程序/九寨沟官方平台，建议提前7–14天抢票。旺季（4.1–11.15）无现场售票。</p>
+        <p><b>三星堆博物馆</b>：72元（学生36）。官方公众号/小程序为唯一渠道，提前5天、每晚20:00放票；8:30–18:00（17:00停止入馆）。</p>
+        <p><b>四姑娘山双桥沟</b>：150元（门票80+观光车70，观光车必购）。官方渠道，提前1–3天购票。</p>
+        <p><b>都江堰熊猫谷</b>：55元（优惠27）。公众号「熊猫谷」提前7天预约，按预约时段刷证入园（早间熊猫最活跃）。</p>
+        <p><b>毕棚沟</b>：约130元（门票70+观光车60）。电瓶车两段往返60元自愿。美团/携程/官方提前线上购。</p>
+        <div class="warn-inline">💡 九寨沟选票策略：提前3天看预约人数——少于2万人买普通票（280元），人多直接买VIP（490元），不用人挤人。</div>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span><span class="emoji">🚗</span> 线上租车 · 取还车流程</span></summary>
+      <div class="body">
+        <p><b>预订</b>：出发前1–2周在神州/一嗨/携程/悟空 App 预订 SUV（探岳 / CR-V / 坦克300等），取还点选<strong>双流机场</strong>，租期 9.14–9.18 共6天（含1天备用），加购不计免赔险（川西山路建议再加玻璃险）。</p>
+        <p><b>取车（约40分钟）</b>：按订单指引到机场取车点 → 出示身份证+驾驶证 → 签电子合同 → 绕车一周拍视频留证（划痕/轮毂/玻璃/油表/里程全记录）→ 确认满油取车。</p>
+        <p><b>还车（约45分钟）</b>：9.18 下午 15:45 前到机场还车点 → 提前加满油（满油取满油还）→ 验车 → 核对ETC/高速费 → 保留结算单。</p>
+        <p><b>注意</b>：违章押金一般1–2周退还；取车后先熟悉车况（刹车/灯光/雨刮）再上高速。</p>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span><span class="emoji">✈️</span> 航班（深圳 ⇄ 成都）</span></summary>
+      <div class="body">
+        <p><b>去程 9.14（周一）早班</b>：订 07:00–08:30 起飞的航班（参考南航 CZ5861 07:00 到双流），落地约 09:30–11:00，直飞约2.5h，参考价 500–1,100元/人。</p>
+        <p><b>返程 9.18（周五）晚班</b>：订 19:30 之后起飞的航班，约 22:00 落地深圳，参考价 600–1,300元/人。</p>
+        <p><b>购票时机</b>：提前2–4周购票锁定低价；9月非节假日，早晚班常有折扣舱位。</p>
+        <p><b>值机</b>：国内航班提前2小时到机场——去程 06:00 前到宝安、返程 16:30 前到双流。</p>
+        <p><b>机场</b>：优先双流进出（去九寨沟方向更顺路）；若飞天府，去程多约40km/1h，返程需预留更多时间。</p>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span><span class="emoji">🧥</span> 天气与衣物（9月中旬）</span></summary>
+      <div class="body">
+        <p><b>天气</b>：高原白天 10–20°C、夜间 5–10°C（四姑娘山可低至0–5°C），昼夜温差 10°C+；9月仍处雨季尾声，山区小气候多变、可能遇雨雪雾。</p>
+        <p><b>外套</b>：冲锋衣/软壳（防风防雨）+ 轻薄羽绒或抓绒内胆（早晚叠穿）。</p>
+        <p><b>内搭</b>：速干长袖2–3件、长裤2条（含防风裤）、保暖袜、薄手套+毛线帽（清晨沟内很冷）。</p>
+        <p><b>鞋</b>：防水防滑徒步鞋（九寨沟、双桥沟大量栈道徒步）。</p>
+        <p><b>防晒防雨</b>：SPF50+防晒霜、墨镜、遮阳帽 + 一次性雨衣。</p>
+        <p><b>路况</b>：出发前3天查九寨沟、四姑娘山、理县天气；如遇强降温/大雪，巴朗山、理小路可能交通管制，备选改走高速绕行。</p>
+      </div>
+    </details>
+
+    <details open>
+      <summary><span><span class="emoji">🆔</span> 证件 · 高反 · 氧气</span></summary>
+      <div class="body">
+        <p><b>证件</b>：全员身份证（所有景区刷证入园）、司机驾驶证（租车必需）。</p>
+        <p><b>高反</b>：行程最高约3,850m（理小路垭口），四姑娘山住宿约3,200m——出发前3–5天开始服红景天；抵高海拔当晚不洗澡、不饮酒、慢行动。</p>
+        <p><b>氧气瓶</b>：<strong>本路线需要储备便携氧气瓶</strong>，详见下方「海拔与氧气」章节。当地药店/酒店约30元/罐。</p>
+        <p><b>药品</b>：感冒药、肠胃药、晕车药、布洛芬（应对高反头痛）、创可贴。</p>
+        <p><b>随身</b>：充电宝、保温杯、少量现金（山区信号弱，小店可能只收现金）、零食干粮（沟内午餐可自备）。</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 环线总览 ══════════ -->
+<section class="card" id="overview">
+  <h2><span class="no">1</span>环线总览</h2>
+  <p class="hint">大九寨环线 · 深圳进出 · 双流取还车 · 高德地图驾车规划（2026-08-14 实测）</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>日期</th><th>行程</th><th>自驾</th><th>过路费</th><th>住宿</th></tr>
+    <tr><td><b>Day1</b> 9.14 周一</td><td>深圳 ✈ 成都 → 三星堆 → 九寨沟口</td><td>465 km · 约6h</td><td>258 元</td><td>九寨沟沟口（漳扎镇）</td></tr>
+    <tr><td><b>Day2</b> 9.15 周二</td><td>九寨沟一日游（Y字形）→ 松潘古城</td><td>105 km · 约2.2h</td><td>0 元</td><td>松潘古城（海拔约2,850m）</td></tr>
+    <tr><td><b>Day3</b> 9.16 周三</td><td>松潘 → 叠溪海子 → 茂县 → 毕棚沟 → 理小路 → 四姑娘山</td><td>490 km · 约10h</td><td>18 元</td><td>四姑娘山镇（海拔约3,200m）</td></tr>
+    <tr><td><b>Day4</b> 9.17 周四</td><td>四姑娘山双桥沟 → 猫鼻梁观景台 → 都江堰</td><td>157 km · 约3.2h</td><td>17 元</td><td>都江堰城区</td></tr>
+    <tr><td><b>Day5</b> 9.18 周五</td><td>熊猫谷 → 成都时代广场（春熙路）→ 双流机场 ✈ 深圳</td><td>104 km · 约2h</td><td>26 元</td><td>当晚飞回深圳</td></tr>
+    <tr><td><b>Day6</b> 9.19 周六</td><td colspan="3">缓冲日：凌晨抵深休整（若航班延误或想多待一晚可改签）</td><td>—</td></tr>
+  </table>
+  </div>
+
+  <h3>🗺 全线自驾路线图（默认显示 · 九寨沟自驾路线A）</h3>
+  <div class="mapframe">
+    <a href="photos/九寨沟环线/九寨沟自驾路线A.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟自驾路线A.jpg" alt="全线自驾路线图" loading="lazy" style="cursor:zoom-in"></a>
+  </div>
+  <p class="mapcap">
+    <a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.956321%2C30.570343%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA%22%2C%22remark%22%3A%22%E6%88%90%E9%83%BD%E5%8F%8C%E6%B5%81%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%20%C2%B7%20%E5%8F%96%E8%BF%98%E8%BD%A6%E7%82%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B104.218621%2C31.001439%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E4%B8%89%E6%98%9F%E5%A0%86%22%2C%22remark%22%3A%22%E5%B9%BF%E6%B1%89%E5%B8%82%E5%90%91%E6%96%B0%E8%B7%AF133%E5%8F%B7%20%C2%B7%20%E9%97%A8%E7%A5%A872%E5%85%83%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.919224%2C33.266991%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E4%B9%9D%E5%AF%A8%E6%B2%9F%E6%B2%9F%E5%8F%A3%22%2C%22remark%22%3A%22%E6%BC%B3%E6%89%8E%E9%95%87%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%20%C2%B7%20%E5%AE%BF%E6%B2%9F%E5%8F%A3%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.598169%2C32.637385%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E6%9D%BE%E6%BD%98%E5%8F%A4%E5%9F%8E%22%2C%22remark%22%3A%22%E6%9D%BE%E6%BD%98%E5%8E%BF%E8%BF%9B%E5%AE%89%E9%95%87%20%C2%B7%20%E6%B5%B7%E6%8B%942850m%20%C2%B7%20%E5%AE%BF%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.681756%2C32.044279%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E5%8F%A0%E6%BA%AA%E6%B5%B7%E5%AD%90%E8%A7%82%E6%99%AF%E5%8F%B0%22%2C%22remark%22%3A%221933%E5%B9%B4%E5%9C%B0%E9%9C%87%E5%A0%B0%E5%A1%9E%E6%B9%96%20%C2%B7%20%E6%B5%B7%E6%8B%942258m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.85332%2C31.681727%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E8%8C%82%E5%8E%BF%22%2C%22remark%22%3A%22%E5%B2%B7%E6%B1%9F%E5%B3%A1%E8%B0%B7%E6%AE%B5%20%C2%B7%20%E5%8D%88%E9%A5%AD%E7%82%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.994424%2C31.38062%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E6%AF%95%E6%A3%9A%E6%B2%9F%22%2C%22remark%22%3A%22%E7%90%86%E5%8E%BF%E6%9C%B4%E5%A4%B4%E9%95%87%20%C2%B7%20%E9%97%A8%E7%A5%A870%2B%E8%A7%82%E5%85%89%E8%BD%A660%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.800862%2C31.294241%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E7%90%86%E5%B0%8F%E8%B7%AF%E7%BA%A2%E7%9F%B3%E6%BB%A9%22%2C%22remark%22%3A%22%E9%9B%AA%E5%B1%B1%E7%BA%A2%E7%9F%B3%E6%BB%A9%20%C2%B7%20%E7%BA%A63800m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.830478%2C30.993794%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E9%95%87%22%2C%22remark%22%3A%22%E5%A4%A7%E4%B9%9D%E5%AF%A8%E6%97%85%E6%B8%B8%E7%8E%AF%E7%BA%BF%20%C2%B7%20%E4%BD%8F%E5%AE%BF%20%C2%B7%20%E6%B5%B7%E6%8B%943200m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.789271%2C31.053333%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E5%8F%8C%E6%A1%A5%E6%B2%9F%22%2C%22remark%22%3A%22%E9%97%A8%E7%A5%A880%2B%E8%A7%82%E5%85%89%E8%BD%A670%20%C2%B7%20%E7%BA%A2%E6%9D%89%E6%9E%973800m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.84704%2C30.987878%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E7%8C%AB%E9%BC%BB%E6%A2%81%E8%A7%82%E6%99%AF%E5%8F%B0%22%2C%22remark%22%3A%22%E8%BF%9C%E7%9C%BA%E5%9B%9B%E5%A7%90%E5%A6%B9%E5%B3%B0%20%C2%B7%20%E7%BA%A63500m%20%C2%B7%20%E5%85%8D%E8%B4%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.615948%2C30.996316%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E9%83%BD%E6%B1%9F%E5%A0%B0%E5%8D%97%E6%A1%A5%22%2C%22remark%22%3A%22%E5%A4%9C%E6%B8%B8%E5%85%8D%E8%B4%B9%20%C2%B7%20%E5%AE%BF%E5%9F%8E%E5%8C%BA%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.587278%2C30.962326%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E9%83%BD%E6%B1%9F%E5%A0%B0%E7%86%8A%E7%8C%AB%E8%B0%B7%22%2C%22remark%22%3A%22%E9%97%A8%E7%A5%A855%E5%85%83%20%C2%B7%20%E6%8F%90%E5%89%8D7%E5%A4%A9%E9%A2%84%E7%BA%A6%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B104.080419%2C30.656359%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E6%88%90%E9%83%BD%E6%97%B6%E4%BB%A3%E5%B9%BF%E5%9C%BA%22%2C%22remark%22%3A%22%E9%94%A6%E6%B1%9F%E5%8C%BA%E6%80%BB%E5%BA%9C%E8%B7%AF2%E5%8F%B7%20%C2%B7%20%E6%98%A5%E7%86%99%E8%B7%AF%E6%97%81%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.956321%2C30.570343%5D%2C%22end%22%3A%5B104.218621%2C31.001439%5D%2C%22remark%22%3A%22Day1%20%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA%E2%86%92%E4%B8%89%E6%98%9F%E5%A0%86%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B104.218621%2C31.001439%5D%2C%22end%22%3A%5B103.919224%2C33.266991%5D%2C%22remark%22%3A%22Day1%20%E4%B8%89%E6%98%9F%E5%A0%86%E2%86%92%E4%B9%9D%E5%AF%A8%E6%B2%9F%EF%BC%88%E4%B9%9D%E7%BB%B5%E9%AB%98%E9%80%9F%EF%BC%89%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.919224%2C33.266991%5D%2C%22end%22%3A%5B103.598169%2C32.637385%5D%2C%22remark%22%3A%22Day2%20%E4%B9%9D%E5%AF%A8%E6%B2%9F%E2%86%92%E6%9D%BE%E6%BD%98%E5%8F%A4%E5%9F%8E%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.598169%2C32.637385%5D%2C%22end%22%3A%5B102.830478%2C30.993794%5D%2C%22remark%22%3A%22Day3%20%E9%80%94%E5%BE%84%E5%8F%A0%E6%BA%AA%E6%B5%B7%E5%AD%90%C2%B7%E8%8C%82%E5%8E%BF%C2%B7%E6%AF%95%E6%A3%9A%E6%B2%9F%C2%B7%E7%90%86%E5%B0%8F%E8%B7%AF%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B102.830478%2C30.993794%5D%2C%22end%22%3A%5B103.615948%2C30.996316%5D%2C%22remark%22%3A%22Day4%20%E9%80%94%E5%BE%84%E5%8F%8C%E6%A1%A5%E6%B2%9F%C2%B7%E7%8C%AB%E9%BC%BB%E6%A2%81%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.615948%2C30.996316%5D%2C%22end%22%3A%5B103.956321%2C30.570343%5D%2C%22remark%22%3A%22Day5%20%E9%80%94%E5%BE%84%E7%86%8A%E7%8C%AB%E8%B0%B7%C2%B7%E6%97%B6%E4%BB%A3%E5%B9%BF%E5%9C%BA%22%7D%5D" target="_blank" rel="noopener">↗ 打开高德互动地图（含各景点标记）</a>
+    <a class="act" href="photos/九寨沟环线/地图/loop.png" target="_blank">🖼 查看静态环线图</a>
+    <span>标记点：双流机场 · 三星堆 · 九寨沟 · 松潘古城 · 叠溪海子 · 茂县 · 毕棚沟 · 理小路红石滩 · 四姑娘山 · 双桥沟 · 猫鼻梁 · 都江堰 · 熊猫谷 · 时代广场</span>
+  </p>
+
+  <h3>🧭 途经景点 / 地点一览</h3>
+  <div class="daychips">
+    <span class="chip">1 双流机场</span><span class="chip">2 三星堆</span><span class="chip">3 九寨沟沟口</span>
+    <span class="chip">4 松潘古城</span><span class="chip">5 叠溪海子</span><span class="chip">6 茂县</span>
+    <span class="chip">7 毕棚沟</span><span class="chip">8 理小路红石滩</span><span class="chip">9 四姑娘山镇</span>
+    <span class="chip">10 双桥沟</span><span class="chip">11 猫鼻梁观景台</span><span class="chip">12 都江堰南桥</span>
+    <span class="chip">13 熊猫谷</span><span class="chip">14 时代广场</span>
+  </div>
+  <div class="note teal">🏔 <b>海拔提醒</b>：本环线最高约3,850m（理小路垭口）、住宿最高约3,200m（四姑娘山镇），需要储备便携氧气瓶——详见文末「海拔与氧气」。</div>
+</section>
+
+<!-- ══════════ DAY 1 ══════════ -->
+<details class="day" id="day1" open>
+  <summary>
+    <div class="day-no">DAY<small>9.14 周一</small></div>
+    <div class="day-title">
+      <div class="dt">深圳 ✈ 成都 → 三星堆 → 九寨沟口</div>
+      <div class="dm">自驾 465 km · 约6h · 过路费 258 元 · 宿九寨沟沟口（漳扎镇）</div>
+    </div>
+    <span class="chev">▼</span>
+  </summary>
+  <div class="day-body">
+    <div class="daychips">
+      <span class="chip c-t">🏞 三星堆游玩 2.5h（不感兴趣可跳过）</span>
+      <span class="chip c-e">🛣 九绵高速 · 路平好开</span>
+      <span class="chip c-b">🏨 沟口住宿 · 步行入园免停车排队</span>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3>🗓 时间安排（含游玩时长、休息与吃饭）</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>时间</th><th>类型</th><th>安排</th></tr>
+          <tr><td class="t-time">06:30</td><td class="t-type">✈ 乘机</td><td>到达深圳宝安机场（早班机，参考南航 CZ5861 07:00 直飞双流）</td></tr>
+          <tr><td class="t-time">09:30</td><td class="t-type">✈ 落地</td><td>落地成都双流机场 → 线上预约的租车平台取车（验车、拍照留档，约40分钟）</td></tr>
+          <tr><td class="t-time">10:20</td><td class="t-type">🚗 驾车</td><td>出发 → 三星堆（81km/约1.1h，成都二绕/京昆高速）</td></tr>
+          <tr><td class="t-time">11:30–14:00</td><td class="t-type">🏞 游玩2.5h</td><td>三星堆博物馆（门票72元，含陈列馆/修复馆；提前5天官方公众号预约）</td></tr>
+          <tr><td class="t-time">12:00–13:00</td><td class="t-type">🍜 午饭</td><td>广汉市区或博物馆园区餐厅，顺带休息（推荐广汉缠丝兔、连山回锅肉）</td></tr>
+          <tr><td class="t-time">14:00</td><td class="t-type">🚗 驾车</td><td>出发 → 九寨沟口（384km/约4.9h，京昆高速 → 绵阳 → 九绵高速，路平好开）</td></tr>
+          <tr><td class="t-time">16:30–16:50</td><td class="t-type">☕ 休息</td><td>平武服务区休整20分钟，换驾驶员、加油（后半程加油站少，建议加满）</td></tr>
+          <tr><td class="t-time">19:30</td><td class="t-type">🏨 入住</td><td>抵达九寨沟沟口（漳扎镇），办理入住</td></tr>
+          <tr><td class="t-time">20:00–21:00</td><td class="t-type">🍜 晚饭</td><td>沟口美食街：牦牛肉汤锅 / 藏式土火锅</td></tr>
+          <tr><td class="t-time">21:30</td><td class="t-type">😴 休息</td><td>早睡，为第二天九寨沟全天徒步养精蓄锐</td></tr>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>🗺 路线地图</h3>
+        <div class="mapframe"><img src="photos/九寨沟环线/地图/d1.png" alt="Day1 路线图" loading="lazy"></div>
+        <p class="mapcap"><a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.956321%2C30.570343%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA%22%2C%22remark%22%3A%22%E6%88%90%E9%83%BD%E5%8F%8C%E6%B5%81%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%20%C2%B7%20%E5%8F%96%E8%BF%98%E8%BD%A6%E7%82%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B104.218621%2C31.001439%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E4%B8%89%E6%98%9F%E5%A0%86%22%2C%22remark%22%3A%22%E5%B9%BF%E6%B1%89%E5%B8%82%E5%90%91%E6%96%B0%E8%B7%AF133%E5%8F%B7%20%C2%B7%20%E9%97%A8%E7%A5%A872%E5%85%83%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.919224%2C33.266991%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E4%B9%9D%E5%AF%A8%E6%B2%9F%E6%B2%9F%E5%8F%A3%22%2C%22remark%22%3A%22%E6%BC%B3%E6%89%8E%E9%95%87%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%20%C2%B7%20%E5%AE%BF%E6%B2%9F%E5%8F%A3%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.956321%2C30.570343%5D%2C%22end%22%3A%5B104.218621%2C31.001439%5D%2C%22remark%22%3A%22Day1%20%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA%E2%86%92%E4%B8%89%E6%98%9F%E5%A0%86%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B104.218621%2C31.001439%5D%2C%22end%22%3A%5B103.919224%2C33.266991%5D%2C%22remark%22%3A%22Day1%20%E4%B8%89%E6%98%9F%E5%A0%86%E2%86%92%E4%B9%9D%E5%AF%A8%E6%B2%9F%EF%BC%88%E4%B9%9D%E7%BB%B5%E9%AB%98%E9%80%9F%EF%BC%89%22%7D%5D" target="_blank" rel="noopener">↗ Day1 互动地图（可缩放）</a></p>
+        <h3>📸 风景</h3>
+        <div class="gallery">
+          <figure><a href="photos/九寨沟环线/三星堆.jpg" data-lightbox><img src="photos/九寨沟环线/三星堆.jpg" alt="三星堆" loading="lazy"></a><figcaption>三星堆博物馆</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <h3>🏨 住宿推荐<span class="tag" style="background:var(--teal-bg);color:var(--teal)">高德POI · 沟口步行可达</span></h3>
+    <div class="hotels">
+      <div class="hotel"><b>九寨沟贵宾楼饭店</b><span class="meta"><span>九寨沟景区门口</span><span>距游客中心 112m</span><span class="rating">★4.6</span></span></div>
+      <div class="hotel"><b>丽呈别院·四季漫居酒店</b><span class="meta"><span>漳扎镇彭丰村100号</span><span>559m</span><span class="rating">★4.6</span></span></div>
+      <div class="hotel"><b>智选假日酒店（九寨沟风景区店）</b><span class="meta"><span>漳扎镇彭丰村一组4号</span><span>744m</span><span class="rating">★4.4</span></span></div>
+      <div class="hotel"><b>漫心酒店（九寨沟游客中心店）</b><span class="meta"><span>漳扎镇隆康村二组1号</span><span>787m</span><span class="rating">★4.8</span></span></div>
+      <div class="hotel"><b>边边街亚朵S酒店</b><span class="meta"><span>隆康社区41号</span><span>820m</span><span class="rating">★4.7</span></span></div>
+      <div class="hotel"><b>全季酒店（九寨沟景区店）</b><span class="meta"><span>羊峒派出所西侧</span><span>1006m</span><span class="rating">★4.6</span></span></div>
+    </div>
+    <p class="mapcap"><a class="act" href="https://ditu.amap.com/search?query=酒店&query_type=RQBXY&longitude=103.919224&latitude=33.266991&range=2000" target="_blank" rel="noopener">🔍 高德搜索沟口周边更多酒店</a><span>9月中旬房价约300–400元/间，建议提前在携程/飞猪预订。</span></p>
+
+    <div class="note">💡 若早班机飞<strong>天府机场</strong>，取车后到三星堆约90km/1.5h，总里程多约40km；飞双流更顺路，订票时优先选双流到达。对文物博物馆不感兴趣的话，可跳过三星堆直接奔九寨沟（省约1.5h）。</div>
+  </div>
+</details>
+
+<!-- ══════════ DAY 2 ══════════ -->
+<details class="day" id="day2" open>
+  <summary>
+    <div class="day-no">DAY<small>9.15 周二</small></div>
+    <div class="day-title">
+      <div class="dt">九寨沟一日游（Y字形）→ 松潘古城</div>
+      <div class="dm">自驾 105 km · 约2.2h · 无过路费 · 宿松潘古城（海拔约2,850m）</div>
+    </div>
+    <span class="chev">▼</span>
+  </summary>
+  <div class="day-body">
+    <div class="daychips">
+      <span class="chip c-t">🏞 景区约9.5h（含午餐休息）</span>
+      <span class="chip c-e">🎫 普通票280 / VIP490</span>
+      <span class="chip c-b">🚶 普通票步数2–3万 · VIP约1.5–2万</span>
+    </div>
+
+    <div class="note red"><b>选票策略</b>：提前3天看预约人数——少于2万人买<b>普通票280元</b>（观光车随机分配左/右沟，一侧玩完回诺日朗中心站换向，步数2–3万）；人多买<b>VIP 490元</b>（门票190+观光车90+VIP升级210，最晚提前一天预订/入院后补差价，路线固定、每点停留15–40分钟打卡式，步数1.5–2万）。</div>
+
+    <div class="twocol">
+      <div>
+        <h3>🗓 时间安排</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>时间</th><th>类型</th><th>安排</th></tr>
+          <tr><td class="t-time">07:00–07:30</td><td class="t-type">🍜 早餐</td><td>酒店早餐，步行至游客中心</td></tr>
+          <tr><td class="t-time">07:30</td><td class="t-type">🏞 入园</td><td>刷身份证入园（门票190+观光车90=280元，提前实名预约）。观光车在诺日朗分叉，若调度先去左支则反向玩</td></tr>
+          <tr><td class="t-time">07:30–12:00</td><td class="t-type">🏞 游玩4.5h</td><td><b>Y字右支</b>：原始森林 → 箭竹海 → 熊猫海 → 五花海（必打卡·九寨一绝）→ 珍珠滩（86版西游记片尾取景）</td></tr>
+          <tr><td class="t-time">12:00–13:00</td><td class="t-type">🍜 午饭+休息</td><td>诺日朗中心站餐厅（套餐/自助），或自备干粮，坐观光车途中休息</td></tr>
+          <tr><td class="t-time">13:00–17:00</td><td class="t-type">🏞 游玩4h</td><td><b>Y字左支</b>：长海（海拔约3,100m，九寨最大海子）→ 五彩池（九寨精华·最小而最艳）→ 返回诺日朗瀑布（宽270m）</td></tr>
+          <tr><td class="t-time">17:00</td><td class="t-type">🚗 出发</td><td>出园取车 → 松潘古城（105km/2.2h，G544国道经川主寺，日落前出发避免夜路）</td></tr>
+          <tr><td class="t-time">19:30</td><td class="t-type">🏨 入住</td><td>抵达松潘古城，办理入住（海拔2,850m，动作放缓防高反）</td></tr>
+          <tr><td class="t-time">20:00–21:00</td><td class="t-type">🍜 晚饭</td><td>古城内：牦牛肉汤锅 / 酥油茶，饭后逛古城夜景</td></tr>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>🗺 路线地图</h3>
+        <div class="mapframe"><img src="photos/九寨沟环线/地图/d2.png" alt="Day2 路线图" loading="lazy"></div>
+        <p class="mapcap"><a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.919224%2C33.266991%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E4%B9%9D%E5%AF%A8%E6%B2%9F%E6%B2%9F%E5%8F%A3%22%2C%22remark%22%3A%22%E6%BC%B3%E6%89%8E%E9%95%87%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%20%C2%B7%20%E5%AE%BF%E6%B2%9F%E5%8F%A3%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.598169%2C32.637385%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E6%9D%BE%E6%BD%98%E5%8F%A4%E5%9F%8E%22%2C%22remark%22%3A%22%E6%9D%BE%E6%BD%98%E5%8E%BF%E8%BF%9B%E5%AE%89%E9%95%87%20%C2%B7%20%E6%B5%B7%E6%8B%942850m%20%C2%B7%20%E5%AE%BF%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.919224%2C33.266991%5D%2C%22end%22%3A%5B103.598169%2C32.637385%5D%2C%22remark%22%3A%22Day2%20%E4%B9%9D%E5%AF%A8%E6%B2%9F%E2%86%92%E6%9D%BE%E6%BD%98%E5%8F%A4%E5%9F%8E%22%7D%5D" target="_blank" rel="noopener">↗ Day2 互动地图（可缩放）</a></p>
+        <h3>📸 九寨沟游玩攻略图</h3>
+        <div class="gallery">
+          <figure><a href="photos/九寨沟环线/九寨沟Y行游玩地图.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟Y行游玩地图.jpg" alt="Y字形游览路线图" loading="lazy"></a><figcaption>Y字形游览路线图</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/九寨沟游玩攻略1.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟游玩攻略1.jpg" alt="游玩攻略1" loading="lazy"></a><figcaption>游玩攻略 ①</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/九寨沟游玩攻略2.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟游玩攻略2.jpg" alt="游玩攻略2" loading="lazy"></a><figcaption>游玩攻略 ②</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/九寨沟秋日机位.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟秋日机位.jpg" alt="秋日机位汇总" loading="lazy"></a><figcaption>秋日机位汇总</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/九寨沟五花海观景台.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟五花海观景台.jpg" alt="五花海观景台" loading="lazy"></a><figcaption>五花海观景台</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/九寨沟拍照姿势1.jpg" data-lightbox><img src="photos/九寨沟环线/九寨沟拍照姿势1.jpg" alt="拍照姿势" loading="lazy"></a><figcaption>拍照姿势参考</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Songpan_Old_Town.jpg/1280px-Songpan_Old_Town.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Songpan_Old_Town.jpg/1280px-Songpan_Old_Town.jpg" alt="松潘古城" loading="lazy"></a><figcaption>松潘古城 · 图源 Wikimedia Commons</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <h3>🏨 住宿推荐<span class="tag" style="background:var(--teal-bg);color:var(--teal)">高德POI · 古城内</span></h3>
+    <div class="hotels">
+      <div class="hotel"><b>云上松间民宿</b><span class="meta"><span>中街250号</span><span>距古城中心 66m</span></span></div>
+      <div class="hotel"><b>云上蕃坊酒店（松州古城店）</b><span class="meta"><span>进安镇中江街289号</span><span>94m</span><span class="rating">★4.8</span></span></div>
+      <div class="hotel"><b>松潘五十六间房酒店</b><span class="meta"><span>北街105号</span><span>129m</span><span class="rating">★4.5</span></span></div>
+      <div class="hotel"><b>庞家花园民宿（松州古城店）</b><span class="meta"><span>中江村192号</span><span>156m</span><span class="rating">★4.6</span></span></div>
+    </div>
+    <p class="mapcap"><a class="act" href="https://ditu.amap.com/search?query=酒店&query_type=RQBXY&longitude=103.598169&latitude=32.637385&range=2000" target="_blank" rel="noopener">🔍 高德搜索松潘古城周边更多酒店</a></p>
+
+    <div class="note">⚠️ 九寨沟旺季每日限流，务必提前在「阿坝旅游网」实名预约；景区内徒步为主（五花海→珍珠滩栈道约1h），穿舒适徒步鞋、备防晒和雨衣。松潘古城海拔约2,850m，是本次行程第一晚高原住宿。</div>
+  </div>
+</details>
+
+<!-- ══════════ DAY 3 ══════════ -->
+<details class="day" id="day3" open>
+  <summary>
+    <div class="day-no">DAY<small>9.16 周三</small></div>
+    <div class="day-title">
+      <div class="dt">松潘 → 茂县 → 毕棚沟 → 理小路 → 四姑娘山</div>
+      <div class="dm">自驾 490 km · 约10h · 过路费 18 元 · 宿四姑娘山镇（海拔约3,200m）</div>
+    </div>
+    <span class="chev">▼</span>
+  </summary>
+  <div class="day-body">
+    <div class="daychips">
+      <span class="chip c-t">⛰ 全程最长一天 · 两人务必轮换</span>
+      <span class="chip c-e">🏞 毕棚沟游玩 3.5h</span>
+      <span class="chip c-g">📸 理小路红石滩 30min</span>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3>🗓 时间安排</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>时间</th><th>类型</th><th>安排</th></tr>
+          <tr><td class="t-time">07:30–08:00</td><td class="t-type">🍜 早餐</td><td>松潘古城早餐</td></tr>
+          <tr><td class="t-time">08:00</td><td class="t-type">🚗 驾车</td><td>出发 → 茂县方向（约85km/2h，G213沿岷江峡谷，途经山崖陡峭、云雾缭绕路段）</td></tr>
+          <tr><td class="t-time">10:00–10:20</td><td class="t-type">☕ 休息+拍照</td><td><b>叠溪海子观景台</b>停靠20分钟（1933年地震堰塞湖，湖面海拔2,258m，湖水湛蓝）</td></tr>
+          <tr><td class="t-time">10:20</td><td class="t-type">🚗 驾车</td><td>继续 → 茂县县城（约55km/1h）</td></tr>
+          <tr><td class="t-time">11:20–12:00</td><td class="t-type">🍜 午饭+休息</td><td>茂县县城午饭（羌族风味：羌家土火锅、咂酒；或简餐赶路）</td></tr>
+          <tr><td class="t-time">12:00</td><td class="t-type">🚗 驾车</td><td>出发 → 毕棚沟（约115km/2h，经汶川、理县）</td></tr>
+          <tr><td class="t-time">14:00–17:30</td><td class="t-type">🏞 游玩3.5h</td><td><b>毕棚沟</b>（门票70+观光车60≈130元；电瓶车两段往返60元自愿）：观光车 → 上海子 → 磐羊湖 → 燕子岩窝（海拔约3,800m，慢行防高反）</td></tr>
+          <tr><td class="t-time">17:30</td><td class="t-type">🚗 驾车</td><td>出发 → 理小路（草原、森林、峡谷、雪山层层变换，一步一景）</td></tr>
+          <tr><td class="t-time">18:30–19:00</td><td class="t-type">📸 拍照30min</td><td><b>理小路红石滩</b>停靠：雪山+红石滩，傍晚光线绝佳（约3,800m）</td></tr>
+          <tr><td class="t-time">19:00</td><td class="t-type">🚗 驾车</td><td>理小路 → 四姑娘山镇（约110km/2.5h，翻垭口最高约3,850m，盘山路慢开）</td></tr>
+          <tr><td class="t-time">21:30</td><td class="t-type">🏨 入住</td><td>抵达四姑娘山镇，办理入住</td></tr>
+          <tr><td class="t-time">22:00</td><td class="t-type">🍜 晚饭</td><td>镇上川菜馆 / 藏餐，饭后早休息（海拔3,200m，当晚不洗澡防高反）</td></tr>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>🗺 路线地图</h3>
+        <div class="mapframe"><img src="photos/九寨沟环线/地图/d3.png" alt="Day3 路线图" loading="lazy"></div>
+        <p class="mapcap"><a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.598169%2C32.637385%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E6%9D%BE%E6%BD%98%E5%8F%A4%E5%9F%8E%22%2C%22remark%22%3A%22%E6%9D%BE%E6%BD%98%E5%8E%BF%E8%BF%9B%E5%AE%89%E9%95%87%20%C2%B7%20%E6%B5%B7%E6%8B%942850m%20%C2%B7%20%E5%AE%BF%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.681756%2C32.044279%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E5%8F%A0%E6%BA%AA%E6%B5%B7%E5%AD%90%E8%A7%82%E6%99%AF%E5%8F%B0%22%2C%22remark%22%3A%221933%E5%B9%B4%E5%9C%B0%E9%9C%87%E5%A0%B0%E5%A1%9E%E6%B9%96%20%C2%B7%20%E6%B5%B7%E6%8B%942258m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.85332%2C31.681727%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E8%8C%82%E5%8E%BF%22%2C%22remark%22%3A%22%E5%B2%B7%E6%B1%9F%E5%B3%A1%E8%B0%B7%E6%AE%B5%20%C2%B7%20%E5%8D%88%E9%A5%AD%E7%82%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.994424%2C31.38062%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E6%AF%95%E6%A3%9A%E6%B2%9F%22%2C%22remark%22%3A%22%E7%90%86%E5%8E%BF%E6%9C%B4%E5%A4%B4%E9%95%87%20%C2%B7%20%E9%97%A8%E7%A5%A870%2B%E8%A7%82%E5%85%89%E8%BD%A660%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.800862%2C31.294241%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E7%90%86%E5%B0%8F%E8%B7%AF%E7%BA%A2%E7%9F%B3%E6%BB%A9%22%2C%22remark%22%3A%22%E9%9B%AA%E5%B1%B1%E7%BA%A2%E7%9F%B3%E6%BB%A9%20%C2%B7%20%E7%BA%A63800m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.830478%2C30.993794%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E9%95%87%22%2C%22remark%22%3A%22%E5%A4%A7%E4%B9%9D%E5%AF%A8%E6%97%85%E6%B8%B8%E7%8E%AF%E7%BA%BF%20%C2%B7%20%E4%BD%8F%E5%AE%BF%20%C2%B7%20%E6%B5%B7%E6%8B%943200m%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.598169%2C32.637385%5D%2C%22end%22%3A%5B102.830478%2C30.993794%5D%2C%22remark%22%3A%22Day3%20%E9%80%94%E5%BE%84%E5%8F%A0%E6%BA%AA%E6%B5%B7%E5%AD%90%C2%B7%E8%8C%82%E5%8E%BF%C2%B7%E6%AF%95%E6%A3%9A%E6%B2%9F%C2%B7%E7%90%86%E5%B0%8F%E8%B7%AF%22%7D%5D" target="_blank" rel="noopener">↗ Day3 互动地图（可缩放）</a></p>
+        <h3>🎬 沿途风景视频（自动循环播放）</h3>
+        <div class="video-grid">
+          <div class="vcard">
+            <video src="photos/九寨沟环线/茂县叠溪海子1.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <div class="vcap">茂县 · 叠溪海子 ①</div>
+          </div>
+          <div class="vcard">
+            <video src="photos/九寨沟环线/茂县叠溪海子2.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <div class="vcap">茂县 · 叠溪海子 ②</div>
+          </div>
+        </div>
+        <h3>📸 沿途风景</h3>
+        <div class="gallery">
+          <figure><a href="photos/九寨沟环线/毕棚沟攻略图.png" data-lightbox><img src="photos/九寨沟环线/毕棚沟攻略图.png" alt="毕棚沟攻略图" loading="lazy"></a><figcaption>毕棚沟攻略图</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/毕棚沟风景1.jpg" data-lightbox><img src="photos/九寨沟环线/毕棚沟风景1.jpg" alt="毕棚沟风景1" loading="lazy"></a><figcaption>毕棚沟 · 磐羊湖</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/毕棚沟风景2.jpg" data-lightbox><img src="photos/九寨沟环线/毕棚沟风景2.jpg" alt="毕棚沟风景2" loading="lazy"></a><figcaption>毕棚沟 · 雪山彩林</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/毕棚沟风景3.png" data-lightbox><img src="photos/九寨沟环线/毕棚沟风景3.png" alt="毕棚沟风景3" loading="lazy"></a><figcaption>毕棚沟 · 燕子岩窝</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/毕棚沟拍照1.jpg" data-lightbox><img src="photos/九寨沟环线/毕棚沟拍照1.jpg" alt="毕棚沟拍照" loading="lazy"></a><figcaption>毕棚沟拍照参考</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/理小路山景1.jpg" data-lightbox><img src="photos/九寨沟环线/理小路山景1.jpg" alt="理小路山景" loading="lazy"></a><figcaption>理小路 · 山景</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/理小路山河景2.jpg" data-lightbox><img src="photos/九寨沟环线/理小路山河景2.jpg" alt="理小路山河景" loading="lazy"></a><figcaption>理小路 · 山河同框</figcaption></figure>
+          <figure><a href="photos/九寨沟环线/理小路雪山红石滩.jpg" data-lightbox><img src="photos/九寨沟环线/理小路雪山红石滩.jpg" alt="理小路雪山红石滩" loading="lazy"></a><figcaption>理小路 · 雪山红石滩</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <h3>🏨 住宿推荐<span class="tag" style="background:var(--teal-bg);color:var(--teal)">高德POI · 四姑娘山镇</span></h3>
+    <div class="hotels">
+      <div class="hotel"><b>四姑娘山雪绒酒店</b><span class="meta"><span>四姑娘山镇</span><span>距镇中心 63m</span><span class="rating">★4.3</span></span></div>
+      <div class="hotel"><b>爱雅HOTEL·轻奢酒店</b><span class="meta"><span>金峰街44号</span><span>86m</span><span class="rating">★4.7</span></span></div>
+      <div class="hotel"><b>归云清风民宿（风情老街店）</b><span class="meta"><span>金锋村二组47号</span><span>98m</span><span class="rating">★4.6</span></span></div>
+      <div class="hotel"><b>全季酒店（四姑娘山景区店）</b><span class="meta"><span>金峰街64号</span><span>122m</span><span class="rating">★4.7</span></span></div>
+    </div>
+    <p class="mapcap"><a class="act" href="https://ditu.amap.com/search?query=酒店&query_type=RQBXY&longitude=102.830478&latitude=30.993794&range=2000" target="_blank" rel="noopener">🔍 高德搜索四姑娘山镇周边更多酒店</a><span>镇上酒店密集，9月中旬约250–350元/间；高反明显的队友可让酒店备氧气瓶（约30元/罐）。</span></p>
+
+    <div class="note red">⏰ 今天驾驶里程最长（约490km）：两人务必轮换；理小路为山区公路、天黑后无路灯，尽量 19:00 前过垭口；若想早点到四姑娘山，可压缩毕棚沟电瓶车段（只坐第一段到磐羊湖）。</div>
+  </div>
+</details>
+
+<!-- ══════════ DAY 4 ══════════ -->
+<details class="day" id="day4" open>
+  <summary>
+    <div class="day-no">DAY<small>9.17 周四</small></div>
+    <div class="day-title">
+      <div class="dt">四姑娘山双桥沟 → 猫鼻梁观景台 → 都江堰</div>
+      <div class="dm">自驾 157 km · 约3.2h · 过路费 17 元 · 宿都江堰</div>
+    </div>
+    <span class="chev">▼</span>
+  </summary>
+  <div class="day-body">
+    <div class="daychips">
+      <span class="chip c-t">🏞 双桥沟游玩 4.5h</span>
+      <span class="chip c-e">📸 猫鼻梁观景 40min（免费）</span>
+      <span class="chip c-b">🌉 都江堰南桥夜游（免费）</span>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3>🗓 时间安排</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>时间</th><th>类型</th><th>安排</th></tr>
+          <tr><td class="t-time">07:30–08:00</td><td class="t-type">🍜 早餐</td><td>镇上早餐</td></tr>
+          <tr><td class="t-time">08:00</td><td class="t-type">🚗 驾车</td><td>出发 → 双桥沟口（约7km/10min）</td></tr>
+          <tr><td class="t-time">08:30–13:00</td><td class="t-type">🏞 游玩4.5h</td><td><b>双桥沟</b>（门票80+观光车70=150元，需实名预约）：观光车直达红杉林（约3,800m）后一站站往下玩：红杉林 → 牛棚子 → 碾鱼坝 → 四姑娜措 → 隆珠措 → 人参果坪（雪山、海子、草甸）</td></tr>
+          <tr><td class="t-time">13:00–13:40</td><td class="t-type">🍜 午饭+休息</td><td>沟内隆珠措服务站简餐 / 自备干粮，或回镇上吃</td></tr>
+          <tr><td class="t-time">13:40</td><td class="t-type">🚗 驾车</td><td>出发 → 猫鼻梁观景台（约8km/15min）</td></tr>
+          <tr><td class="t-time">14:00–14:40</td><td class="t-type">📸 观景40min</td><td><b>猫鼻梁观景台</b>：远眺四姑娘山幺妹峰及四姐妹全貌（海拔约3,500m，免费），天气晴好时雪山一览无余</td></tr>
+          <tr><td class="t-time">14:40</td><td class="t-type">🚗 驾车</td><td>出发 → 都江堰（约149km/3.2h，巴朗山隧道 → 卧龙 → 映秀 → 都汶高速）</td></tr>
+          <tr><td class="t-time">16:30–16:50</td><td class="t-type">☕ 休息</td><td>卧龙服务区休整20分钟，换驾驶员（卧龙附近常有野生熊猫走廊，注意限速）</td></tr>
+          <tr><td class="t-time">18:30</td><td class="t-type">🏨 入住</td><td>抵达都江堰城区，办理入住</td></tr>
+          <tr><td class="t-time">19:00–21:00</td><td class="t-type">🍜 晚饭+夜游</td><td>灌县古城：南桥夜景（免费）→ 夜啤酒长廊，尤兔头 / 青城四绝</td></tr>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>🗺 路线地图</h3>
+        <div class="mapframe"><img src="photos/九寨沟环线/地图/d4.png" alt="Day4 路线图" loading="lazy"></div>
+        <p class="mapcap"><a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.830478%2C30.993794%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E9%95%87%22%2C%22remark%22%3A%22%E5%A4%A7%E4%B9%9D%E5%AF%A8%E6%97%85%E6%B8%B8%E7%8E%AF%E7%BA%BF%20%C2%B7%20%E4%BD%8F%E5%AE%BF%20%C2%B7%20%E6%B5%B7%E6%8B%943200m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.789271%2C31.053333%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E5%8F%8C%E6%A1%A5%E6%B2%9F%22%2C%22remark%22%3A%22%E9%97%A8%E7%A5%A880%2B%E8%A7%82%E5%85%89%E8%BD%A670%20%C2%B7%20%E7%BA%A2%E6%9D%89%E6%9E%973800m%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B102.84704%2C30.987878%5D%2C%22sort%22%3A%22%E9%A3%8E%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E7%8C%AB%E9%BC%BB%E6%A2%81%E8%A7%82%E6%99%AF%E5%8F%B0%22%2C%22remark%22%3A%22%E8%BF%9C%E7%9C%BA%E5%9B%9B%E5%A7%90%E5%A6%B9%E5%B3%B0%20%C2%B7%20%E7%BA%A63500m%20%C2%B7%20%E5%85%8D%E8%B4%B9%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.615948%2C30.996316%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E9%83%BD%E6%B1%9F%E5%A0%B0%E5%8D%97%E6%A1%A5%22%2C%22remark%22%3A%22%E5%A4%9C%E6%B8%B8%E5%85%8D%E8%B4%B9%20%C2%B7%20%E5%AE%BF%E5%9F%8E%E5%8C%BA%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B102.830478%2C30.993794%5D%2C%22end%22%3A%5B103.615948%2C30.996316%5D%2C%22remark%22%3A%22Day4%20%E9%80%94%E5%BE%84%E5%8F%8C%E6%A1%A5%E6%B2%9F%C2%B7%E7%8C%AB%E9%BC%BB%E6%A2%81%22%7D%5D" target="_blank" rel="noopener">↗ Day4 互动地图（可缩放）</a></p>
+        <h3>🎬 风景视频（自动循环播放）</h3>
+        <div class="video-grid">
+          <div class="vcard">
+            <video src="photos/九寨沟环线/四姑娘山双桥沟红杉林.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <div class="vcap">双桥沟 · 红杉林</div>
+          </div>
+          <div class="vcard">
+            <video src="photos/九寨沟环线/四姑娘山双桥沟1.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <div class="vcap">双桥沟 · 雪山溪流 ①</div>
+          </div>
+          <div class="vcard">
+            <video src="photos/九寨沟环线/四姑娘山双桥沟2.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+            <div class="vcap">双桥沟 · 雪山溪流 ②</div>
+          </div>
+        </div>
+        <h3>📸 风景</h3>
+        <div class="gallery">
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Mount_Siguniang_2.jpg/1280px-Mount_Siguniang_2.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Mount_Siguniang_2.jpg/1280px-Mount_Siguniang_2.jpg" alt="幺妹峰" loading="lazy"></a><figcaption>四姑娘山 · 幺妹峰（猫鼻梁视角）</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E6%99%AF%E5%8C%BA_Mount_Siguniang_Scenic_Area_39.jpg/1280px-%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E6%99%AF%E5%8C%BA_Mount_Siguniang_Scenic_Area_39.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E6%99%AF%E5%8C%BA_Mount_Siguniang_Scenic_Area_39.jpg/1280px-%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E6%99%AF%E5%8C%BA_Mount_Siguniang_Scenic_Area_39.jpg" alt="四姑娘山景区" loading="lazy"></a><figcaption>四姑娘山景区 · 图源 Wikimedia</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dujiang_Weir.jpg/1280px-Dujiang_Weir.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Dujiang_Weir.jpg/1280px-Dujiang_Weir.jpg" alt="都江堰" loading="lazy"></a><figcaption>都江堰水利工程 · 图源 Wikimedia</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Dujiangyan_Irrigation_System_%2850620354352%29.jpg/1280px-Dujiangyan_Irrigation_System_%2850620354352%29.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Dujiangyan_Irrigation_System_%2850620354352%29.jpg/1280px-Dujiangyan_Irrigation_System_%2850620354352%29.jpg" alt="都江堰鱼嘴" loading="lazy"></a><figcaption>都江堰 · 鱼嘴分水堤 · 图源 Wikimedia</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <h3>🏨 住宿推荐<span class="tag" style="background:var(--teal-bg);color:var(--teal)">高德POI · 南桥附近</span></h3>
+    <div class="hotels">
+      <div class="hotel"><b>二王庙宾馆</b><span class="meta"><span>百花岭路3号</span><span>距南桥 274m</span><span class="rating">★4.7</span></span></div>
+      <div class="hotel"><b>月光宝瓶民宿（南桥店）</b><span class="meta"><span>西街171号</span><span>539m</span><span class="rating">★4.8</span></span></div>
+      <div class="hotel"><b>源来私汤民宿（南桥店）</b><span class="meta"><span>西街161号</span><span>552m</span><span class="rating">★4.9</span></span></div>
+      <div class="hotel"><b>拙隐·山房私汤民宿（南桥店）</b><span class="meta"><span>文庙山街63号</span><span>564m</span><span class="rating">★4.8</span></span></div>
+      <div class="hotel"><b>新华海颐·御垒山居酒店</b><span class="meta"><span>建设路413号</span><span>608m</span><span class="rating">★4.5</span></span></div>
+    </div>
+    <p class="mapcap"><a class="act" href="https://ditu.amap.com/search?query=酒店&query_type=RQBXY&longitude=103.615948&latitude=30.996316&range=2000" target="_blank" rel="noopener">🔍 高德搜索都江堰南桥周边更多酒店</a></p>
+
+    <div class="note">💡 若今晚时间充裕想逛<strong>都江堰景区</strong>（门票80元，18:00前入园），可安排在Day5上午；本方案仅安排南桥夜游（免费）。</div>
+  </div>
+</details>
+
+<!-- ══════════ DAY 5 ══════════ -->
+<details class="day" id="day5" open>
+  <summary>
+    <div class="day-no">DAY<small>9.18 周五</small></div>
+    <div class="day-title">
+      <div class="dt">熊猫谷 → 成都时代广场（春熙路）→ 双流机场 ✈ 深圳</div>
+      <div class="dm">自驾 104 km · 约2h · 过路费 26 元 · 当晚飞回深圳</div>
+    </div>
+    <span class="chev">▼</span>
+  </summary>
+  <div class="day-body">
+    <div class="daychips">
+      <span class="chip c-t">🐼 熊猫谷游玩 2.5h（早间最活跃）</span>
+      <span class="chip c-e">🛍 春熙路商圈 2.5h</span>
+      <span class="chip c-b">✈ 订 19:30 后晚班机</span>
+    </div>
+
+    <div class="twocol">
+      <div>
+        <h3>🗓 时间安排</h3>
+        <div class="table-scroll">
+        <table>
+          <tr><th>时间</th><th>类型</th><th>安排</th></tr>
+          <tr><td class="t-time">07:30–08:00</td><td class="t-type">🍜 早餐</td><td>酒店早餐</td></tr>
+          <tr><td class="t-time">08:00</td><td class="t-type">🚗 驾车</td><td>出发 → 熊猫谷（6km/15min，环山旅游路玉堂段408号）</td></tr>
+          <tr><td class="t-time">08:15–11:00</td><td class="t-type">🏞 游玩2.5h</td><td><b>都江堰熊猫谷</b>（门票55元，公众号「熊猫谷」提前7天预约）：早间熊猫最活跃，园区依山而建、人少清静，可近距离看大熊猫与小熊猫</td></tr>
+          <tr><td class="t-time">11:00</td><td class="t-type">🚗 驾车</td><td>出发 → 成都市区（55km/1h，成灌高速 → 绕城）</td></tr>
+          <tr><td class="t-time">12:00–13:30</td><td class="t-type">🍜 午饭</td><td><b>时代广场</b>（总府路2号，春熙路地铁D口步行270米）：商场内火锅 / 川菜</td></tr>
+          <tr><td class="t-time">13:30–15:00</td><td class="t-type">🛍 逛街1.5h</td><td>春熙路步行街 → IFS「熊猫屁股」打卡 → 太古里（从时代广场步行即达）</td></tr>
+          <tr><td class="t-time">15:00</td><td class="t-type">🚗 驾车</td><td>出发 → 双流机场（20km/40min）</td></tr>
+          <tr><td class="t-time">15:45–16:30</td><td class="t-type">🚗 还车</td><td>机场还车点验车还车（预留45分钟），随后值机托运</td></tr>
+          <tr><td class="t-time">17:30–18:30</td><td class="t-type">🍜 晚饭</td><td>机场晚餐、休息</td></tr>
+          <tr><td class="t-time">19:30</td><td class="t-type">✈ 起飞</td><td>晚班机 → 深圳（直飞约2.5h，约22:00落地宝安）</td></tr>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>🗺 路线地图</h3>
+        <div class="mapframe"><img src="photos/九寨沟环线/地图/d5.png" alt="Day5 路线图" loading="lazy"></div>
+        <p class="mapcap"><a class="act" href="https://a.amap.com/jsapi_demo_show/static/openclaw/travel_plan.html?data=%5B%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.615948%2C30.996316%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E9%83%BD%E6%B1%9F%E5%A0%B0%E5%8D%97%E6%A1%A5%22%2C%22remark%22%3A%22%E5%A4%9C%E6%B8%B8%E5%85%8D%E8%B4%B9%20%C2%B7%20%E5%AE%BF%E5%9F%8E%E5%8C%BA%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.587278%2C30.962326%5D%2C%22sort%22%3A%22%E6%99%AF%E7%82%B9%22%2C%22text%22%3A%22%E9%83%BD%E6%B1%9F%E5%A0%B0%E7%86%8A%E7%8C%AB%E8%B0%B7%22%2C%22remark%22%3A%22%E9%97%A8%E7%A5%A855%E5%85%83%20%C2%B7%20%E6%8F%90%E5%89%8D7%E5%A4%A9%E9%A2%84%E7%BA%A6%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B104.080419%2C30.656359%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E6%88%90%E9%83%BD%E6%97%B6%E4%BB%A3%E5%B9%BF%E5%9C%BA%22%2C%22remark%22%3A%22%E9%94%A6%E6%B1%9F%E5%8C%BA%E6%80%BB%E5%BA%9C%E8%B7%AF2%E5%8F%B7%20%C2%B7%20%E6%98%A5%E7%86%99%E8%B7%AF%E6%97%81%22%7D%2C%7B%22type%22%3A%22poi%22%2C%22lnglat%22%3A%5B103.956321%2C30.570343%5D%2C%22sort%22%3A%22%E6%9E%A2%E7%BA%BD%22%2C%22text%22%3A%22%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA%22%2C%22remark%22%3A%22%E6%88%90%E9%83%BD%E5%8F%8C%E6%B5%81%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%20%C2%B7%20%E5%8F%96%E8%BF%98%E8%BD%A6%E7%82%B9%22%7D%2C%7B%22type%22%3A%22route%22%2C%22routeType%22%3A%22driving%22%2C%22start%22%3A%5B103.615948%2C30.996316%5D%2C%22end%22%3A%5B103.956321%2C30.570343%5D%2C%22remark%22%3A%22Day5%20%E9%80%94%E5%BE%84%E7%86%8A%E7%8C%AB%E8%B0%B7%C2%B7%E6%97%B6%E4%BB%A3%E5%B9%BF%E5%9C%BA%22%7D%5D" target="_blank" rel="noopener">↗ Day5 互动地图（可缩放）</a></p>
+        <h3>📸 风景</h3>
+        <div class="gallery">
+          <figure><a href="photos/九寨沟环线/熊猫谷.jpg" data-lightbox><img src="photos/九寨沟环线/熊猫谷.jpg" alt="熊猫谷" loading="lazy"></a><figcaption>都江堰熊猫谷</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/5/54/Chengdu-pandas-d10.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Chengdu-pandas-d10.jpg" alt="大熊猫" loading="lazy"></a><figcaption>大熊猫 · 图源 Wikimedia</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Chunxi_Road_seen_from_viaduct%2C_Chengdu.jpg/1280px-Chunxi_Road_seen_from_viaduct%2C_Chengdu.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Chunxi_Road_seen_from_viaduct%2C_Chengdu.jpg/1280px-Chunxi_Road_seen_from_viaduct%2C_Chengdu.jpg" alt="春熙路" loading="lazy"></a><figcaption>成都 · 春熙路 · 图源 Wikimedia</figcaption></figure>
+          <figure><a href="https://upload.wikimedia.org/wikipedia/commons/c/c9/Sino-Ocean_Taikoo_Li_Chengdu.jpg" data-lightbox target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Sino-Ocean_Taikoo_Li_Chengdu.jpg" alt="太古里" loading="lazy"></a><figcaption>成都 · 远洋太古里 · 图源 Wikimedia</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="note teal">🛫 <b>Day6（9.19 周六）为缓冲日</b>：若晚班机延误或想多待一晚，可改签周六航班；正常情况凌晨前到家，睡到自然醒。</div>
+  </div>
+</details>
+
+<!-- ══════════ 费用预算 ══════════ -->
+<section class="card" id="budget">
+  <h2><span class="no">¥</span>费用预算（4人 · 人均）</h2>
+  <p class="hint">门票为2026年旺季价；里程/时长/过路费由高德驾车规划接口计算（2026-08-14 调用）</p>
+
+  <h3>🎫 门票（2026年9月旺季价）</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>景区</th><th>价格</th><th>明细</th></tr>
+    <tr><td>九寨沟</td><td><b>280 元</b>（VIP 490 元）</td><td>门票190 + 观光车90；VIP另加升级210元</td></tr>
+    <tr><td>三星堆</td><td>72 元</td><td>含陈列馆/修复馆，学生36元</td></tr>
+    <tr><td>毕棚沟</td><td>约130 元</td><td>门票70 + 观光车60；电瓶车两段往返60元自愿</td></tr>
+    <tr><td>四姑娘山双桥沟</td><td>150 元</td><td>门票80 + 观光车70（观光车必购）</td></tr>
+    <tr><td>都江堰熊猫谷</td><td>55 元</td><td>优惠票27元</td></tr>
+    <tr><td><b>合计</b></td><td><b>687 元/人</b></td><td>选VIP为 897 元/人；都江堰景区80元为备选</td></tr>
+  </table>
+  </div>
+
+  <h3>💰 人均明细</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>项目</th><th>明细</th><th>人均（元）</th></tr>
+    <tr><td>✈ 机票</td><td>深圳⇄成都往返（提前2–4周购票，早班去/晚班回）</td><td>约 1,100 – 2,400</td></tr>
+    <tr><td>🚗 租车</td><td>SUV 6天（含基础保险与服务费，如探岳/CR-V/坦克300），按约3,000元/车计</td><td>约 575 – 850</td></tr>
+    <tr><td>⛽ 油费</td><td>约1,321km × 8.5L/100km × 8.06元/L（四川92号）≈ 905元/车</td><td>约 226</td></tr>
+    <tr><td>🛣 过路费</td><td>高德规划合计约319元/车（Day1 258 + Day3 18 + Day4 17 + Day5 26）</td><td>约 80</td></tr>
+    <tr><td>🎫 门票</td><td>九寨沟280 + 三星堆72 + 毕棚沟130 + 双桥沟150 + 熊猫谷55</td><td>687（VIP 897）</td></tr>
+    <tr><td>🏨 住宿</td><td>4晚 × 2间（九寨沟口/松潘/四姑娘山/都江堰，约250–350元/间·晚）</td><td>约 500 – 700</td></tr>
+    <tr><td>🍜 餐饮</td><td>6天 × 约100元/人·天</td><td>约 600</td></tr>
+    <tr><td><b>人均合计（不含机票）</b></td><td colspan="2"><b>约 2,650 – 3,150 元</b></td></tr>
+    <tr><td><b>人均合计（含机票）</b></td><td colspan="2"><b>约 4,300 – 5,500 元</b>（按往返机票1,100–2,400元计；若选九寨沟VIP另加210元）</td></tr>
+  </table>
+  </div>
+  <p class="hint">价格说明：门票/租车/油价为2026年8月网络可查价格（旺季价），机票为动态价格以购票平台实时价为准；毕棚沟套票、电瓶车等以景区当日公示为准。</p>
+</section>
+
+<!-- ══════════ 海拔与氧气 ══════════ -->
+<section class="card" id="altitude">
+  <h2><span class="no">⛰</span>路线海拔与氧气储备</h2>
+  <p class="hint">结论：<b>需要储备便携氧气瓶</b>。本环线最高约3,850m（理小路垭口）、住宿最高约3,200m（四姑娘山镇），且Day3–Day4连续在高海拔活动。</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>地点</th><th>海拔</th><th>备注</th></tr>
+    <tr><td>成都 / 三星堆</td><td>约 500m</td><td>平原，无高反风险</td></tr>
+    <tr><td>九寨沟沟口</td><td>约 2,000m</td><td>景区大门附近，多数人无感</td></tr>
+    <tr><td>九寨沟长海</td><td>约 3,100m <span class="altbadge alt-mid">中海拔</span></td><td>景区游客可达最高点，慢行</td></tr>
+    <tr><td>松潘古城</td><td>约 2,850m <span class="altbadge alt-mid">中海拔</span></td><td>第一晚高原住宿，当晚不洗澡不饮酒</td></tr>
+    <tr><td>叠溪海子观景台</td><td>约 2,258m</td><td>途经停靠20分钟</td></tr>
+    <tr><td>茂县县城</td><td>约 1,580m</td><td>午饭点，海拔回落</td></tr>
+    <tr><td>毕棚沟燕子岩窝</td><td>约 3,800m <span class="altbadge alt-high">高海拔</span></td><td>景区最高点，慢行防高反</td></tr>
+    <tr><td>理小路垭口（红石滩一带）</td><td>约 3,850m <span class="altbadge alt-high">全环线最高</span></td><td>隧道西口，短暂停留不剧烈活动</td></tr>
+    <tr><td>四姑娘山镇</td><td>约 3,200m <span class="altbadge alt-high">高海拔住宿</span></td><td>住宿最高点，当晚不洗澡、不饮酒</td></tr>
+    <tr><td>双桥沟红杉林</td><td>约 3,800m <span class="altbadge alt-high">高海拔</span></td><td>观光车直达，游玩约1小时</td></tr>
+    <tr><td>猫鼻梁观景台</td><td>约 3,500m <span class="altbadge alt-mid">中海拔</span></td><td>停靠40分钟</td></tr>
+    <tr><td>都江堰 / 熊猫谷</td><td>约 700–800m</td><td>海拔基本回落</td></tr>
+  </table>
+  </div>
+
+  <h3>🫁 氧气瓶储备建议</h3>
+  <div class="mustdo" style="grid-template-columns:1fr 1fr;">
+    <div class="note teal"><b>准备量</b>：4人建议每人2罐便携氧气（约30元/罐）+ 车内备用2罐，共约10罐；成都或当地药店/酒店均可购买，也可提前网购寄到成都酒店。</div>
+    <div class="note red"><b>使用时机</b>：出现头痛、气短、恶心时立即休息吸氧；高反在夜间加重，睡前可吸一罐帮助入睡。红景天出发前3–5天开始服用。</div>
+  </div>
+  <div class="note blue"><b>为什么需要</b>：Day2松潘（2,850m）→ Day3毕棚沟（3,800m）+理小路（3,850m）→ 四姑娘山镇过夜（3,200m）→ Day4双桥沟（3,800m），连续三天在高海拔活动且有一晚高海拔住宿，4人中若有第一次上高原的队员，氧气瓶是低成本高收益的保障。</div>
+</section>
+
+<!-- ══════════ 出行贴士 ══════════ -->
+<section class="card" id="tips">
+  <h2><span class="no">💡</span>出行贴士</h2>
+  <div class="mustdo">
+    <div class="note">🧗 <b>高原反应</b>：行程最高约3,850m，四姑娘山镇住宿约3,200m。建议出发前3–5天服用红景天，抵达高海拔当晚不洗澡、不饮酒、少剧烈运动，备氧气瓶和布洛芬。</div>
+    <div class="note">🌦 <b>天气与装备</b>：9月中旬川西约5–20°C，山区早晚温差大。带冲锋衣/羽绒内胆、徒步鞋、防晒霜、墨镜、雨衣；理小路、巴朗山路段可能遇云雾，关注路况（如遇大雪封路改走高速绕行）。</div>
+    <div class="note">🚗 <b>驾驶安全</b>：两人轮换，每2小时或150km休息；山区道路弯多，不夜间赶路；租车建议加购不计免赔险。取还车都在双流机场（若往返天府机场，过路费/里程相应增加约40km）。</div>
+    <div class="note">📱 <b>预约进度</b>：全部预约购票事项已置顶在页面顶部「出发前必办清单」，出行前3天请再次确认各景区余票、天气与路况。</div>
+    <div class="note">📕 <b>攻略补充</b>：出发前可上小红书搜索「九寨沟 9月机位」「理小路 2026」「四姑娘山 双桥沟 攻略」等关键词看最新实况帖（文中风景图取自本地素材及 Wikimedia Commons 自由版权图库，小红书图片不支持外链，故未直接嵌入）。</div>
+  </div>
+</section>
+
+<footer>
+  <p>本页面为《九寨沟环线方案A》攻略完成版（A3）。路线/里程/时长/过路费/住宿/景点坐标来自<b>高德地图 Web 服务 API</b>（amap-lbs-skill，2026-08-14 调用）；门票、租车、油价、机票价格来自公开网络信息（2026年8月查询）；图片与视频来自本地素材及 Wikimedia Commons。互动地图由高德开放平台页面承载。</p>
+  <p>生成日期 2026-08-14 · 行程时间 2026-09-14 – 2026-09-19 · 分享给朋友后，点击右上角「⛑ 必办清单」先看置顶事项。</p>
+</footer>
+
+</div>
+
+<a class="totop" href="#" title="回到顶部">↑</a>
+
+<div class="lightbox" id="lightbox">
+  <span class="lbclose">×</span>
+  <img src="" alt="">
+  <div class="lbcap"></div>
+</div>
+
+<script>
+  (function(){
+    /* 展开/收起全部 */
+    var all = document.querySelectorAll('details.day');
+    window.toggleAll = function(open){ all.forEach(function(d){ d.open = open; }); };
+    var bar = document.createElement('div');
+    bar.className='btnrow';
+    bar.innerHTML = '<button class="act" onclick="toggleAll(true)">展开全部</button><button class="act" onclick="toggleAll(false)">收起全部</button>';
+    var ov = document.getElementById('overview');
+    var note = document.createElement('p');
+    note.className='hint';
+    note.innerHTML='每天内容可折叠，点击卡片标题即可展开/收起；点击图片可放大查看。';
+    ov.parentNode.insertBefore(note, ov.nextSibling);
+    document.querySelector('#day1').parentNode.insertBefore(bar, document.getElementById('day1'));
+
+    /* 打勾清单：localStorage 持久化 + 进度 */
+    var KEY = 'jzgA3_checklist_v1';
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.chk-item input'));
+    var barFill = document.getElementById('progbar');
+    var cntEl = document.getElementById('chkcnt');
+    function saved(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+    function render(){
+      var st = saved(); var n = 0;
+      boxes.forEach(function(cb){
+        cb.checked = !!st[cb.value];
+        if(cb.checked){ n++; cb.parentNode.classList.add('done'); }
+        else { cb.parentNode.classList.remove('done'); }
+      });
+      var pct = boxes.length ? Math.round(n/boxes.length*100) : 0;
+      barFill.style.width = pct + '%';
+      cntEl.textContent = n + ' / ' + boxes.length;
+    }
+    function persist(){
+      var o = {};
+      boxes.forEach(function(cb){ o[cb.value] = cb.checked; });
+      localStorage.setItem(KEY, JSON.stringify(o));
+      render();
+    }
+    boxes.forEach(function(cb){ cb.addEventListener('change', persist); });
+    document.getElementById('chkreset').addEventListener('click', function(){
+      boxes.forEach(function(cb){ cb.checked = false; });
+      localStorage.removeItem(KEY);
+      render();
+    });
+    render();
+
+    /* 图片灯箱 */
+    var lb = document.getElementById('lightbox');
+    var lbImg = lb.querySelector('img');
+    var lbCap = lb.querySelector('.lbcap');
+    document.addEventListener('click', function(e){
+      var a = e.target.closest('a[data-lightbox]');
+      if(!a) return;
+      e.preventDefault();
+      lbImg.src = a.href;
+      var im = a.querySelector('img');
+      lbImg.alt = im ? im.alt : '';
+      var cap = a.querySelector('figcaption');
+      lbCap.textContent = cap ? cap.textContent : '';
+      lb.classList.add('show');
+    });
+    lb.addEventListener('click', function(e){
+      if(e.target === lb || e.target.classList.contains('lbclose')) lb.classList.remove('show');
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') lb.classList.remove('show');
+    });
+  })();
+</script>
+</body>
+</html>
